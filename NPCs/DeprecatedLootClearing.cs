@@ -17,7 +17,7 @@ namespace MoeLib.NPCs
 
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
-
+            
             base.ModifyNPCLoot(npc, npcLoot);
         }
     }

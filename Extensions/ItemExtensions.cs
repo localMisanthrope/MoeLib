@@ -39,6 +39,32 @@ namespace MoeLib.Extensions
         }
 
         /// <summary>
+        /// Allows you to manually enable a component by its name at runtime.
+        /// <br></br> <b>DO NOT USE THIS WHILE LOADING;</b> Globals are not fully instantiated at load time!
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="componentName"></param>
+        /// <returns></returns>
+        public static bool TryEnableComponent(this Item item, string componentName)
+        {
+            foreach (var global in item.Globals)
+            {
+                if (global is not ItemComponent)
+                    continue;
+
+                if (global.Name == componentName)
+                {
+                    var component = global as ItemComponent;
+                    component.Enabled = true;
+                    component.OnEnabled(item);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Attempts to safely grab the component instance on this Item.
         /// </summary>
         /// <typeparam name="T"></typeparam>
