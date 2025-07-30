@@ -1,0 +1,3 @@
+displayName = MoeLib
+author = localMisanthrope
+version = 0.1

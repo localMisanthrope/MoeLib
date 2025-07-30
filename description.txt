@@ -1,0 +1,1 @@
+A simple library of Entity-Framework content implementations, as well as various helper functions that make my life easier.
