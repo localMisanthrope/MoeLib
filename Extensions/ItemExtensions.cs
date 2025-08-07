@@ -44,7 +44,7 @@ namespace MoeLib.Extensions
         /// </summary>
         /// <param name="item"></param>
         /// <param name="componentName"></param>
-        /// <returns></returns>
+        /// <returns>True if the component exists, false otherwise.</returns>
         public static bool TryEnableComponent(this Item item, string componentName)
         {
             foreach (var global in item.Globals)
@@ -61,6 +61,7 @@ namespace MoeLib.Extensions
                 }
             }
 
+            MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(componentName));
             return false;
         }
 

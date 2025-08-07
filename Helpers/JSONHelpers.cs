@@ -30,8 +30,20 @@ namespace MoeLib.Helpers
             return JsonConvert.DeserializeObject<IEnumerable<T>>(Encoding.UTF8.GetString(file));
         }
 
+        /// <summary>
+        /// Gets a JSON Item reference by its name.
+        /// </summary>
+        /// <param name="mod"></param>
+        /// <param name="name"></param>
+        /// <returns>The given type of the Item.</returns>
         public static int GetJSONItemType(Mod mod, string name) => mod.GetContent<ModItem>().First(x => x.Name == name).Type;
 
+        /// <summary>
+        /// Gets a JSON Item reference by its name.
+        /// </summary>
+        /// <param name="mod"></param>
+        /// <param name="name"></param>
+        /// <returns>The given <see cref="Item"/> of the Item.</returns>
         public static Item GetJSONItem(Mod mod, string name) => mod.GetContent<ModItem>().First(x => x.Name == name).Item;
     }
 }
