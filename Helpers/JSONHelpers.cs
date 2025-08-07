@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -27,5 +29,9 @@ namespace MoeLib.Helpers
 
             return JsonConvert.DeserializeObject<IEnumerable<T>>(Encoding.UTF8.GetString(file));
         }
+
+        public static int GetJSONItemType(Mod mod, string name) => mod.GetContent<ModItem>().First(x => x.Name == name).Type;
+
+        public static Item GetJSONItem(Mod mod, string name) => mod.GetContent<ModItem>().First(x => x.Name == name).Item;
     }
 }
