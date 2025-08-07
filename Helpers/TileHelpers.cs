@@ -6,7 +6,7 @@ using Terraria.DataStructures;
 
 namespace MoeLib.Helpers
 {
-    internal class TileHelpers
+    public class TileHelpers
     {
         /// <summary>
         /// Attempts to add a component instance to the tile at the given position.

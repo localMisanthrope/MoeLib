@@ -5,7 +5,7 @@ namespace MoeLib.TileEntities
     /// <summary>
     /// A custom tile entity which automatically eliminates itself if the tile is no longer valid for a TE.
     /// </summary>
-    internal abstract class MoeLibTileEntity : ModTileEntity
+    public abstract class MoeLibTileEntity : ModTileEntity
     {
         public virtual void SafeUpdate() { }
 

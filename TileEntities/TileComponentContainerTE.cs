@@ -10,7 +10,7 @@ namespace MoeLib.TileEntities
     /// <summary>
     /// A container tile entity which stores <see cref="TileComponent"/> instances on a tile.
     /// </summary>
-    internal class TileComponentContainerTE : ModTileEntity
+    public class TileComponentContainerTE : ModTileEntity
     {
         public List<TileComponent> components = [];
 
