@@ -18,8 +18,6 @@ namespace MoeLib.Helpers
             return TileObjectData.GetTileData(tile) != null;
         }
 
-        public static void IsVanillaTileEntity(ModTileEntity entity) => PostGenTileEntityPlacementSystem.postGenTileEntities?.Add(entity);
-
         /// <summary>
         /// Incrementally attempts to find a coordinate on the surface from a given x value.
         /// </summary>
