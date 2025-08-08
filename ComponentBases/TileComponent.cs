@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -34,7 +36,7 @@ namespace MoeLib.ComponentBases
 
     public class TileComponentRegistry: ILoadable
     {
-        private static readonly List<TileComponent> _registry = new();
+        private static readonly List<TileComponent> _registry = [];
 
         public static int Count => _registry.Count;
 
@@ -46,6 +48,19 @@ namespace MoeLib.ComponentBases
         }
 
         public static TileComponent Get(int ID) => ID < 0 || ID > _registry.Count ? null : _registry[ID];
+
+        public static int GetType<T>() where T : TileComponent
+        {
+            var component = _registry.FirstOrDefault(x => x.GetType() == typeof(T));
+
+            if (component is null)
+            {
+                MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
+                return -1;
+            }
+
+            return component.ID;
+        }
 
         public void Load(Mod mod) { }
 
