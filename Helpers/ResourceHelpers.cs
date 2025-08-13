@@ -22,7 +22,7 @@ namespace MoeLib.Helpers
         /// <param name="path"></param>
         /// <returns></returns>
         public static string GetTexturePath(string path) =>
-            ModContent.Request<Texture2D>(path).Value is null ? PLACEHOLDER_PATH : path;
+            ModContent.RequestIfExists<Texture2D>(path, out var asset) ? path : PLACEHOLDER_PATH;
 
         /// <summary>
         /// Requests the texture at the given path and returns it or a placeholder.
@@ -30,9 +30,6 @@ namespace MoeLib.Helpers
         /// <param name="path"></param>
         /// <returns></returns>
         public static Texture2D GetTexture(string path)
-        {
-            var tex = ModContent.Request<Texture2D>(path).Value;
-            return tex is null ? Placeholder : tex;
-        }
+            => ModContent.RequestIfExists<Texture2D>(path, out var asset) ? asset.Value : Placeholder;
     }
 }
