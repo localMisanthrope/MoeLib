@@ -39,6 +39,22 @@ namespace MoeLib.Extensions
         public static HitManager GetHitManager(this Player player) => player.TryGetModPlayer(out HitManager manager) ? manager : null;
 
         /// <summary>
+        /// Gets the next open slot within the player's inventory.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns>The index of the open slot; -1 if there are no open slots.</returns>
+        public static int NextOpenInventorySlot(this Player player)
+        {
+            int slotIndex = -1;
+
+            for (int i = 0; i < Main.InventoryItemSlotsCount; i++)
+                if (player.inventory[i].IsAir)
+                    slotIndex = i;
+
+            return slotIndex;
+        }
+
+        /// <summary>
         /// Consumes a set amount of an item from the player's inventory.
         /// </summary>
         /// <param name="player"></param>
@@ -211,7 +227,7 @@ namespace MoeLib.Extensions
         /// <returns>True if the instance exists and is enabled, false otherwise.</returns>
         public static bool TryGetComponent<T>(this Player player, out T component) where T : PlayerComponent
         {
-            if (!player.TryGetModPlayer(out T result) && result.Enabled)
+            if (!player.TryGetModPlayer(out T result) || !result.Enabled)
             {
                 MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
                 component = default;

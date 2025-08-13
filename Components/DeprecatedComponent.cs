@@ -2,7 +2,6 @@
 using MoeLib.ComponentBases;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -16,20 +15,18 @@ namespace MoeLib.Components
     {
         public override void SetDefaults(Item entity)
         {
-            if (Enabled) //To-Do: Fill out the remaining properties.
-            {
-                entity.accessory = false;
-                entity.autoReuse = false;
+            if (!Enabled) 
+                return;
 
-                entity.axe = 0;
-                entity.damage = -1;
-                entity.knockBack = 0f;
-                entity.pick = 0;
+            entity.accessory = false;
+            entity.autoReuse = false;
 
-                entity.color = Color.Gray;
-            }
+            entity.axe = 0;
+            entity.damage = -1;
+            entity.knockBack = 0f;
+            entity.pick = 0;
 
-            base.SetDefaults(entity);
+            entity.color = Color.Gray;
         }
 
         public override bool CanUseItem(Item item, Player player) => !Enabled;
@@ -50,14 +47,12 @@ namespace MoeLib.Components
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (Enabled)
-            {
-                tooltips[0].Text += $" {Language.GetTextValue("Mods.MoeLib.ItemComponents.DeprecatedSuffix")}";
-                tooltips[0].OverrideColor = Color.Gray;
-                tooltips.Add(new(Mod, "DeprecatedLine", Language.GetTextValue("Mods.MoeLib.ItemComponents.DeprecatedLine")));
-            }
+            if (!Enabled)
+                return;
 
-            base.ModifyTooltips(item, tooltips);
+            tooltips[0].Text += $" {Language.GetTextValue("Mods.MoeLib.ItemComponents.DeprecatedSuffix")}";
+            tooltips[0].OverrideColor = Color.Gray;
+            tooltips.Add(new(Mod, "DeprecatedLine", Language.GetTextValue("Mods.MoeLib.ItemComponents.DeprecatedLine")));
         }
     }
 }
