@@ -74,7 +74,7 @@ namespace MoeLib.Extensions
         /// <returns>True if the instance exists and is enabled, false otherwise.</returns>
         public static bool TryGetComponent<T>(this Item item, out T component) where T : ItemComponent
         {
-            if (!item.TryGetGlobalItem(out T result) || !result.Enabled)
+            if (!item.TryGetGlobalItem(out T result) && result.Enabled)
             {
                 MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
                 component = default;

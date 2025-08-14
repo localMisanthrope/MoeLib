@@ -227,7 +227,7 @@ namespace MoeLib.Extensions
         /// <returns>True if the instance exists and is enabled, false otherwise.</returns>
         public static bool TryGetComponent<T>(this Player player, out T component) where T : PlayerComponent
         {
-            if (!player.TryGetModPlayer(out T result) || !result.Enabled)
+            if (!player.TryGetModPlayer(out T result) && result.Enabled)
             {
                 MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
                 component = default;

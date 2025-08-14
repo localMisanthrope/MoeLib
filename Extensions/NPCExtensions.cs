@@ -37,7 +37,7 @@ namespace MoeLib.Extensions
         /// <returns>True if the instance exists and is enabled, false otherwise.</returns>
         public static bool TryGetComponent<T>(this NPC npc, out T component) where T : NPCComponent
         {
-            if (!npc.TryGetGlobalNPC(out T result) || !result.Enabled)
+            if (!npc.TryGetGlobalNPC(out T result) && result.Enabled)
             {
                 MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
                 component = default;
