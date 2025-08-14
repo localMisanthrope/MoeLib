@@ -54,6 +54,19 @@ namespace MoeLib
 
         public static EntityEffect GetEffect(string name) => _registry.FirstOrDefault(x => x.Name == name);
 
+        public static int GetEffectType<T>() where T: EntityEffect
+        {
+            var effect = _registry.FirstOrDefault(x => x.GetType() == typeof(T));
+
+            if (effect is null)
+            {
+                MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.EntityEffectNotFound").Format(typeof(T).Name));
+                return -1;
+            }
+
+            return effect.Type;
+        }
+
         public void Load(Mod mod) { }
 
         public void Unload() => _registry.Clear();

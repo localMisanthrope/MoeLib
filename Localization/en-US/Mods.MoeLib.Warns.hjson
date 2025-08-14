@@ -1,5 +1,6 @@
 ComponentDuplicate: Failed to add "{0}"; component already exists on this entity!
 ComponentNotFound: Could not find "{0}"; component missing or does not exist!
+EntityEffectNotFound: Could not find "{0}"; effect missing or does not exist!
 JSONEmpty: Failed to load "{0}"; file is empty!
 JSONNotFound: Could not find "{0}.json"; file missing, or does not exist!
 TileEntityNotFound: Could not find "{0}"; TileEntity missing or does not exist!
