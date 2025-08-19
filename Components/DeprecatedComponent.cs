@@ -1,8 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using MoeLib.ComponentBases;
+using MoeLib.Extensions;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Localization;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace MoeLib.Components
@@ -11,7 +12,7 @@ namespace MoeLib.Components
     /// Allows you to manually deprecate Items and remove their sources from the game. 
     /// <br>Use this <b>only</b> for Items that no longer serve a purpose.</br>
     /// </summary>
-    internal class DeprecatedComponent : ItemComponent
+    internal sealed class DeprecatedComponent : ItemComponent
     {
         public override void SetDefaults(Item entity)
         {
@@ -50,9 +51,21 @@ namespace MoeLib.Components
             if (!Enabled)
                 return;
 
-            tooltips[0].Text += $" {Language.GetTextValue("Mods.MoeLib.ItemComponents.DeprecatedSuffix")}";
+            tooltips[0].Text += $" {this.GetLocalization("DeprecatedSuffix").Value}";
             tooltips[0].OverrideColor = Color.Gray;
-            tooltips.Add(new(Mod, "DeprecatedLine", Language.GetTextValue("Mods.MoeLib.ItemComponents.DeprecatedLine")));
+            tooltips.Add(new(Mod, "DeprecatedLine", this.GetLocalization("DeprecatedLine").Value));
+        }
+    }
+
+    public class DeprecationTest: GlobalItem
+    {
+        public override bool AppliesToEntity(Item entity, bool lateInstantiation) => entity.type == ItemID.CopperShortsword;
+
+        public override void SetDefaults(Item entity)
+        {
+            entity.TryEnableComponent<DeprecatedComponent>();
+
+            base.SetDefaults(entity);
         }
     }
 }

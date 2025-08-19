@@ -1,11 +1,8 @@
 ﻿using MoeLib.ComponentBases;
-using MoeLib.TileEntities;
 using System;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Localization;
-using Terraria.ObjectData;
 
 namespace MoeLib.Helpers
 {
@@ -33,13 +30,13 @@ namespace MoeLib.Helpers
         {
             if (!TileEntity.TryGet(i, j, out TileComponentContainerTE entity))
             {
-                MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.TileEntityNotFound").Format(typeof(TileComponentContainerTE).Name));
+                MoeLib.Instance.Logger.Warn(MoeLib.GetWarn("TileEntityNotFound").Format(typeof(TileComponentContainerTE).Name));
                 return false;
             }
 
             if (HasComponent<T>(i, j))
             {
-                MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentDuplicate").Format(typeof(T).Name));
+                MoeLib.Instance.Logger.Warn(MoeLib.GetWarn("ComponentDuplicate").Format(typeof(T).Name));
                 return false;
             }
 
@@ -61,17 +58,17 @@ namespace MoeLib.Helpers
         {
             if (!TileEntity.TryGet(i, j, out TileComponentContainerTE entity))
             {
-                MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.TileEntityNotFound").Format(typeof(TileComponentContainerTE).Name));
+                MoeLib.Instance.Logger.Warn(MoeLib.GetWarn("TileEntityNotFound").Format(typeof(TileComponentContainerTE).Name));
                 return false;
             }
 
             if (HasComponent(i, j, componentType))
             {
-                MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentDuplicate").Format(TileComponentRegistry.Get(componentType).Name));
+                MoeLib.Instance.Logger.Warn(MoeLib.GetWarn("ComponentDuplicate").Format(TileComponentRegistry.GetTileComponent(componentType).Name));
                 return false;
             }
 
-            var component = TileComponentRegistry.Get(componentType);
+            var component = TileComponentRegistry.GetTileComponent(componentType);
             component.Init();
             init?.Invoke(component);
             entity.components.Add(component);
@@ -90,7 +87,7 @@ namespace MoeLib.Helpers
         {
             if (!TileEntity.TryGet(i, j, out TileComponentContainerTE entity))
             {
-                MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.TileEntityNotFound").Format(typeof(TileComponentContainerTE).Name));
+                MoeLib.Instance.Logger.Warn(MoeLib.GetWarn("TileEntityNotFound").Format(typeof(TileComponentContainerTE).Name));
                 result = null;
                 return false;
             }
@@ -99,7 +96,7 @@ namespace MoeLib.Helpers
 
             if (component is null)
             {
-                MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
+                MoeLib.Instance.Logger.Warn(MoeLib.GetWarn("ComponentNotFound").Format(typeof(T).Name));
                 result = null;
                 return false;
             }
@@ -120,7 +117,7 @@ namespace MoeLib.Helpers
         {
             if (!TileEntity.TryGet(i, j, out TileComponentContainerTE entity))
             {
-                MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.TileEntityNotFound").Format(typeof(TileComponentContainerTE).Name));
+                MoeLib.Instance.Logger.Warn(MoeLib.GetWarn("TileEntityNotFound").Format(typeof(TileComponentContainerTE).Name));
                 result = null;
                 return false;
             }
@@ -129,7 +126,7 @@ namespace MoeLib.Helpers
 
             if (component is null)
             {
-                MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(TileComponentRegistry.Get(componentType).Name));
+                MoeLib.Instance.Logger.Warn(MoeLib.GetWarn("ComponentNotFound").Format(TileComponentRegistry.GetTileComponent(componentType).Name));
                 result = null;
                 return false;
             }
@@ -169,13 +166,13 @@ namespace MoeLib.Helpers
         {
             if (!TileEntity.TryGet(i, j, out TileComponentContainerTE entity))
             {
-                MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.TileEntityNotFound").Format(typeof(TileComponentContainerTE).Name));
+                MoeLib.Instance.Logger.Warn(MoeLib.GetWarn("TileEntityNotFound").Format(typeof(TileComponentContainerTE).Name));
                 return false;
             }
 
             if (!TryGetComponent(i, j, out T result))
             {
-                MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
+                MoeLib.Instance.Logger.Warn(MoeLib.GetWarn("ComponentNotFound").Format(typeof(T).Name));
                 return false;
             }
 

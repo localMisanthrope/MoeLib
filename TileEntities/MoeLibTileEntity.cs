@@ -1,4 +1,5 @@
-﻿using Terraria.ModLoader;
+﻿using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace MoeLib.TileEntities
 {
@@ -8,6 +9,14 @@ namespace MoeLib.TileEntities
     public abstract class MoeLibTileEntity : ModTileEntity
     {
         public virtual void SafeUpdate() { }
+
+        public override void OnKill()
+        {
+            if (ModContent.GetInstance<MoeLibConfig>().EnableDevMode)
+                Mod.Logger.Info(Language.GetText("Mods.MoeLib.Misc.TileEntityDeath").Format(Name, Position.X, Position.Y));
+
+            base.OnKill();
+        }
 
         public sealed override void Update()
         {

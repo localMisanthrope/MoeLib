@@ -1,2 +1,4 @@
-DeprecatedSuffix: (Deprecated)
-DeprecatedLine: Deprecated: This item has been deprecated and serves no function.
+DeprecatedComponent: {
+	DeprecatedSuffix: (Deprecated)
+	DeprecatedLine: Deprecated: This item has been deprecated and serves no function.
+}

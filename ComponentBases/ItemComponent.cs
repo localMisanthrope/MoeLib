@@ -6,7 +6,7 @@ namespace MoeLib.ComponentBases
     /// <summary>
     /// A component for Item entities which stores its own data and runs logic when enabled.
     /// </summary>
-    public abstract class ItemComponent : GlobalItem
+    public abstract class ItemComponent : GlobalItem, ILocalizedModType
     {
         /// <summary>
         /// Whether or not this component is enabled and logic should run.
@@ -14,6 +14,8 @@ namespace MoeLib.ComponentBases
         public bool Enabled { get; set; }
 
         public sealed override bool InstancePerEntity { get; } = true;
+
+        public string LocalizationCategory => "ItemComponents";
 
         /// <summary>
         /// Allows you to make one-time actions for when this component is enabled.

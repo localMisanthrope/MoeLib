@@ -19,7 +19,7 @@ namespace MoeLib.Helpers
 
             if (!data.IsValid)
             {
-                MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.WorldFileInvalid").Format(data.Name));
+                MoeLib.Instance.Logger.Warn(MoeLib.GetWarn("WorldFileInvalid").Format(data.Name));
                 return false;
             }
 

@@ -6,7 +6,7 @@ namespace MoeLib.ComponentBases
     /// <summary>
     /// A component for NPC entities which stores its own data and runs logic when enabled.
     /// </summary>
-    public abstract class NPCComponent : GlobalNPC
+    public abstract class NPCComponent : GlobalNPC, ILocalizedModType
     {
         /// <summary>
         /// Whether or not this component is enabled and logic should run.
@@ -14,6 +14,8 @@ namespace MoeLib.ComponentBases
         public bool Enabled { get; set; }
 
         public sealed override bool InstancePerEntity { get; } = true;
+
+        public string LocalizationCategory => "NPCComponents";
 
         /// <summary>
         /// Allows you to make one-time actions for when this component is enabled.

@@ -1,1 +1,6 @@
+ComponentAdded: Component "{0}" has been added to Object "{1}".
+ComponentDisabled: Component "{0}" has been disabled on Entity "{1}".
+ComponentEnabled: Component "{0}" has been enabled on Entity "{1}".
+ComponentRemoved: Component "{0}" has been removed from Object "{1}".
+TileEntityDeath: Tile Entity "{0}" @ ({1}, {2}) has been killed.
 ToWorldMessage: Player {0} has entered {1}.

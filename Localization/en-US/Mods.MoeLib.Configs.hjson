@@ -1,0 +1,10 @@
+MoeLibConfig: {
+	DisplayName: MoeLib Config
+
+	EnableDevMode: {
+		Label: Enable Developer Mode
+		Tooltip: Essentially a "debug" mode for developers. Includes logging, hitbox displays, etc. Useful for testing mod implementations. \n Set to false by default.
+	}
+
+	Headers.DeveloperMode: Developer Mode
+}
