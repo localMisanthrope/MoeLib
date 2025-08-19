@@ -1,7 +1,6 @@
-﻿namespace MoeLib.Helpers
-{
-    public class CrossModHelpers
-    {
+﻿namespace MoeLib.Helpers;
 
-    }
+public class CrossModHelpers
+{
+
 }

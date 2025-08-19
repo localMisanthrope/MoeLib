@@ -1,31 +1,30 @@
-﻿using Terraria.Localization;
+﻿namespace MoeLib.TileEntities;
+
+using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace MoeLib.TileEntities
+/// <summary>
+/// A custom tile entity which automatically eliminates itself if the tile is no longer valid for a TE.
+/// </summary>
+public abstract class MoeLibTileEntity : ModTileEntity
 {
-    /// <summary>
-    /// A custom tile entity which automatically eliminates itself if the tile is no longer valid for a TE.
-    /// </summary>
-    public abstract class MoeLibTileEntity : ModTileEntity
+    public virtual void SafeUpdate() { }
+
+    public override void OnKill()
     {
-        public virtual void SafeUpdate() { }
+        if (ModContent.GetInstance<MoeLibConfig>().EnableDevMode)
+            Mod.Logger.Info(Language.GetText("Mods.MoeLib.Misc.TileEntityDeath").Format(Name, Position.X, Position.Y));
 
-        public override void OnKill()
-        {
-            if (ModContent.GetInstance<MoeLibConfig>().EnableDevMode)
-                Mod.Logger.Info(Language.GetText("Mods.MoeLib.Misc.TileEntityDeath").Format(Name, Position.X, Position.Y));
+        base.OnKill();
+    }
 
-            base.OnKill();
-        }
+    public sealed override void Update()
+    {
+        if (!IsTileValidForEntity(Position.X, Position.Y))
+            Kill(Position.X, Position.Y);
 
-        public sealed override void Update()
-        {
-            if (!IsTileValidForEntity(Position.X, Position.Y))
-                Kill(Position.X, Position.Y);
+        SafeUpdate();
 
-            SafeUpdate();
-
-            base.Update();
-        }
+        base.Update();
     }
 }

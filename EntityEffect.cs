@@ -1,74 +1,73 @@
-﻿using System.Collections.Generic;
+﻿namespace MoeLib;
+
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace MoeLib
+/// <summary>
+/// Used to create ulterior effects on an entity where a component would be too costly or unnecessary.
+/// <br></br> In JSON, reference and get via the <see cref="ModType.Name"/> of the effect.
+/// <br></br> Do not use for any I/O actions, as this should be handled in the entity or its component.
+/// </summary>
+public abstract class EntityEffect : ModType, ILocalizedModType
 {
+    public int Type;
+
+    public LocalizedText DisplayName => this.GetLocalization(nameof(DisplayName), PrettyPrintName);
+
+    public LocalizedText Description => this.GetLocalization(nameof(Description), () => "");
+
+    public string LocalizationCategory => "EntityEffects";
+
     /// <summary>
-    /// Used to create ulterior effects on an entity where a component would be too costly or unnecessary.
-    /// <br></br> In JSON, reference and get via the <see cref="ModType.Name"/> of the effect.
-    /// <br></br> Do not use for any I/O actions, as this should be handled in the entity or its component.
+    /// Used to create special effects on a particular entity.
+    /// <br></br> Reminder to use pattern matching if this effect is called on multiple <see cref="Entity"/> types.
     /// </summary>
-    public abstract class EntityEffect : ModType, ILocalizedModType
+    /// <param name="actor">The entity to be acting upon.</param>
+    public virtual void UpdateEffect<T>(T actor) where T : Entity { }
+
+    protected sealed override void Register()
     {
-        public int Type;
+        ModTypeLookup<EntityEffect>.Register(this);
+        Type = EffectRegistry.AddEffect(this);
+    }
+}
 
-        public LocalizedText DisplayName => this.GetLocalization(nameof(DisplayName), PrettyPrintName);
+internal class EffectRegistry : ILoadable
+{
+    private static readonly List<EntityEffect> _registry = [];
 
-        public LocalizedText Description => this.GetLocalization(nameof(Description), () => "");
+    public static int Count => _registry.Count;
 
-        public string LocalizationCategory => "EntityEffects";
-
-        /// <summary>
-        /// Used to create special effects on a particular entity.
-        /// <br></br> Reminder to use pattern matching if this effect is called on multiple <see cref="Entity"/> types.
-        /// </summary>
-        /// <param name="actor">The entity to be acting upon.</param>
-        public virtual void UpdateEffect<T>(T actor) where T: Entity { }
-
-        protected sealed override void Register()
-        {
-            ModTypeLookup<EntityEffect>.Register(this);
-            Type = EffectRegistry.AddEffect(this);
-        }
+    public static int AddEffect(EntityEffect effect)
+    {
+        int count = Count;
+        _registry.Add(effect);
+        return count;
     }
 
-    internal class EffectRegistry: ILoadable
+    public static EntityEffect GetEffect(int type) => type <= 0 || type > _registry.Count ? null : _registry[type];
+
+    public static EntityEffect GetEffect<T>() where T : EntityEffect => _registry.FirstOrDefault(x => x.GetType() == typeof(T));
+
+    public static EntityEffect GetEffect(string name) => _registry.FirstOrDefault(x => x.Name == name);
+
+    public static int GetEffectType<T>() where T : EntityEffect
     {
-        private static readonly List<EntityEffect> _registry = [];
+        var effect = _registry.FirstOrDefault(x => x.GetType() == typeof(T));
 
-        public static int Count => _registry.Count;
-
-        public static int AddEffect(EntityEffect effect)
+        if (effect is null)
         {
-            int count = Count;
-            _registry.Add(effect);
-            return count;
+            MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.EntityEffectNotFound").Format(typeof(T).Name));
+            return -1;
         }
 
-        public static EntityEffect GetEffect(int type) => type <= 0 || type > _registry.Count ? null : _registry[type];
-
-        public static EntityEffect GetEffect<T>() where T: EntityEffect => _registry.FirstOrDefault(x => x.GetType() == typeof(T));
-
-        public static EntityEffect GetEffect(string name) => _registry.FirstOrDefault(x => x.Name == name);
-
-        public static int GetEffectType<T>() where T: EntityEffect
-        {
-            var effect = _registry.FirstOrDefault(x => x.GetType() == typeof(T));
-
-            if (effect is null)
-            {
-                MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.EntityEffectNotFound").Format(typeof(T).Name));
-                return -1;
-            }
-
-            return effect.Type;
-        }
-
-        public void Load(Mod mod) { }
-
-        public void Unload() => _registry.Clear();
+        return effect.Type;
     }
+
+    public void Load(Mod mod) { }
+
+    public void Unload() => _registry.Clear();
 }

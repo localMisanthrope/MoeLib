@@ -1,24 +1,20 @@
-﻿using MoeLib.Components;
-using MoeLib.Extensions;
+﻿namespace MoeLib.NPCs;
+
 using Terraria;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader;
 
-namespace MoeLib.NPCs
+internal class DeprecatedLootClearing : GlobalNPC
 {
-    internal class DeprecatedLootClearing : GlobalNPC
-    {
-        //To-Do: Resolve item drops and shop items for deprecated items.
-        
-        public override void ModifyShop(NPCShop shop)
-        {
-            base.ModifyShop(shop);
-        }
+    //To-Do: Resolve item drops and shop items for deprecated items.
 
-        public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
-        {
-            
-            base.ModifyNPCLoot(npc, npcLoot);
-        }
+    public override void ModifyShop(NPCShop shop)
+    {
+        base.ModifyShop(shop);
+    }
+
+    public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
+    {
+
+        base.ModifyNPCLoot(npc, npcLoot);
     }
 }
