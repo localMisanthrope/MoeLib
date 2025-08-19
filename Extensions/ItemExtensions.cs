@@ -33,8 +33,8 @@ namespace MoeLib.Extensions
             }
 
             result.Enabled = true;
-            result.OnEnabled(item);
             init?.Invoke(result);
+            result.OnEnabled(item);
             return true;
         }
 
@@ -74,14 +74,14 @@ namespace MoeLib.Extensions
         /// <returns>True if the instance exists and is enabled, false otherwise.</returns>
         public static bool TryGetComponent<T>(this Item item, out T component) where T : ItemComponent
         {
-            if (!item.TryGetGlobalItem(out T result) && result.Enabled)
+            if (item.TryGetGlobalItem(out T result))
             {
-                MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
-                component = default;
-                return false;
+                component = result;
+                return result.Enabled;
             }
 
-            component = result;
+            MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
+            component = default;
             return true;
         }
 

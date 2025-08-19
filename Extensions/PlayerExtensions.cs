@@ -213,8 +213,8 @@ namespace MoeLib.Extensions
             }
 
             result.Enabled = true;
-            result.OnEnabled();
             init?.Invoke(result);
+            result.OnEnabled();
             return true;
         }
 
@@ -227,15 +227,15 @@ namespace MoeLib.Extensions
         /// <returns>True if the instance exists and is enabled, false otherwise.</returns>
         public static bool TryGetComponent<T>(this Player player, out T component) where T : PlayerComponent
         {
-            if (!player.TryGetModPlayer(out T result) && result.Enabled)
+            if (player.TryGetModPlayer(out T result))
             {
-                MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
-                component = default;
-                return false;
+                component = result;
+                return result.Enabled;
             }
 
-            component = result;
-            return true;
+            MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
+            component = default;
+            return false;
         }
 
         /// <summary>

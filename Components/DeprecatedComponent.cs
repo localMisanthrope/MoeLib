@@ -1,9 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using MoeLib.ComponentBases;
-using MoeLib.Extensions;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace MoeLib.Components
@@ -23,11 +22,11 @@ namespace MoeLib.Components
             entity.autoReuse = false;
 
             entity.axe = 0;
-            entity.damage = -1;
+            entity.crit = 0;
+            entity.damage = 0;
+            entity.DamageType = DamageClass.Default;
             entity.knockBack = 0f;
             entity.pick = 0;
-
-            entity.color = Color.Gray;
         }
 
         public override bool CanUseItem(Item item, Player player) => !Enabled;
@@ -46,6 +45,16 @@ namespace MoeLib.Components
 
         public override bool CanConsumeAmmo(Item weapon, Item ammo, Player player) => !Enabled;
 
+        public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            if (!Enabled)
+                return base.PreDrawInInventory(item, spriteBatch, position, frame, drawColor, itemColor, origin, scale);
+
+            item.color = Color.Gray;
+            drawColor = Color.Gray;
+            return true;
+        }
+
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             if (!Enabled)
@@ -54,18 +63,6 @@ namespace MoeLib.Components
             tooltips[0].Text += $" {this.GetLocalization("DeprecatedSuffix").Value}";
             tooltips[0].OverrideColor = Color.Gray;
             tooltips.Add(new(Mod, "DeprecatedLine", this.GetLocalization("DeprecatedLine").Value));
-        }
-    }
-
-    public class DeprecationTest: GlobalItem
-    {
-        public override bool AppliesToEntity(Item entity, bool lateInstantiation) => entity.type == ItemID.CopperShortsword;
-
-        public override void SetDefaults(Item entity)
-        {
-            entity.TryEnableComponent<DeprecatedComponent>();
-
-            base.SetDefaults(entity);
         }
     }
 }
