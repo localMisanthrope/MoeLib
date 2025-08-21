@@ -1,9 +1,12 @@
 ﻿namespace MoeLib.Extensions;
 
 using global::MoeLib.ComponentBases;
+using global::MoeLib.Components;
+using global::MoeLib.Systems;
 using System;
 using Terraria;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 public static class ItemExtensions
 {
@@ -16,6 +19,25 @@ public static class ItemExtensions
     /// <returns></returns>
     public static string ToTextIcon(this Item item, int stack = 0, int prefix = -1)
         => $"[i{(prefix != -1 ? $"/p{prefix}" : "")}{(stack > 0 ? $"/s{stack}" : "")}:{(item.ModItem is null ? $"{item.type}" : $"{item.ModItem.FullName}")}]";
+
+    /// <summary>
+    /// Marks an Item to be deprecated on load.
+    /// </summary>
+    /// <param name="item"></param>
+    public static void Deprecate(this Item item)
+    {
+        DeprecationSystem.toBeDeprecated.Add(item.type);
+
+        if (ModContent.GetInstance<MoeLibConfig>().EnableDevMode)
+            MoeLib.Instance.Logger.Info(Language.GetText("Mods.MoeLib.Misc.ItemDeprecated").Format(item.Name));
+    }
+
+    /// <summary>
+    /// Whether or not the Item is deprecated.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    public static bool IsDeprecated(this Item item) => item.HasComponent<DeprecatedComponent>();
 
     /// <summary>
     /// Attempts to enable a component instance on the Item.

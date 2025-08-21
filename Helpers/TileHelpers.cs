@@ -42,7 +42,7 @@ public class TileHelpers
 
         component.Position = entity.Position.ToPoint(); //Perhaps handle within Init()?
         component.Init();
-        entity.components.Add(component);
+        entity.components?.Add(component);
         return true;
     }
 
@@ -71,7 +71,7 @@ public class TileHelpers
         var component = TileComponentRegistry.GetTileComponent(componentType);
         component.Init();
         init?.Invoke(component);
-        entity.components.Add(component);
+        entity.components?.Add(component);
         return true;
     }
 
@@ -176,7 +176,7 @@ public class TileHelpers
             return false;
         }
 
-        entity.components.Remove(result);
+        entity.components?.Remove(result);
         return true;
     }
 }
