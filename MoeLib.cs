@@ -11,7 +11,7 @@ public class MoeLib : Mod
 
     public override void PostSetupContent()
     {
-        Instance.Logger.Info("This mod was made with MoeLib!");
+        Instance.Logger.Info($"This mod was made with MoeLib v{Version}!");
 
         base.PostSetupContent();
     }

@@ -1,22 +1,22 @@
 ﻿namespace MoeLib.NPCs;
 
-using global::MoeLib.Components;
-using global::MoeLib.Extensions;
+using global::MoeLib.Systems;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 internal class DeprecatedLootClearing : GlobalNPC
 {
     public override void ModifyShop(NPCShop shop)
     {
-        if (shop.TryGetEntry(ItemID.CopperShortsword, out NPCShop.Entry entry))
-            entry.Disable();
+        foreach (var ID in DeprecationSystem.toBeDeprecated)
+            if (shop.TryGetEntry(ID, out NPCShop.Entry entry) && !entry.Disabled)
+                entry.Disable();
     }
 
     public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
     {
-        npcLoot.RemoveWhere(x => (x is CommonDrop rule && new Item(rule.itemId).HasComponent<DeprecatedComponent>()));
+        foreach (var ID in DeprecationSystem.toBeDeprecated)
+            npcLoot.RemoveWhere(x => x is CommonDrop rule && rule.itemId == ID);
     }
 }
