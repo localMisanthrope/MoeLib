@@ -1,11 +1,11 @@
-﻿namespace MoeLib.Components;
-
-using global::MoeLib.ComponentBases;
+﻿using MoeLib.ComponentBases;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
+
+namespace MoeLib.Components;
 
 /// <summary>
 /// Allows you to manually deprecate Items and remove their sources from the game. 

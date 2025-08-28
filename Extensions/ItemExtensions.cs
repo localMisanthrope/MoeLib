@@ -1,12 +1,12 @@
-﻿namespace MoeLib.Extensions;
-
-using global::MoeLib.ComponentBases;
-using global::MoeLib.Components;
-using global::MoeLib.Systems;
+﻿using MoeLib.ComponentBases;
+using MoeLib.Components;
+using MoeLib.Systems;
 using System;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
+
+namespace MoeLib.Extensions;
 
 public static class ItemExtensions
 {

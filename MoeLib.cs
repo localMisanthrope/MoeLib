@@ -1,7 +1,7 @@
-namespace MoeLib;
-
 using Terraria.Localization;
 using Terraria.ModLoader;
+
+namespace MoeLib;
 
 public class MoeLib : Mod
 {

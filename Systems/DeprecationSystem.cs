@@ -1,12 +1,12 @@
-﻿namespace MoeLib.Systems;
-
-using global::MoeLib.Extensions;
-using global::MoeLib.Components;
+﻿using MoeLib.Extensions;
+using MoeLib.Components;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
+
+namespace MoeLib.Systems;
 
 internal sealed class DeprecationSystem : ModSystem
 {

@@ -1,8 +1,8 @@
-﻿namespace MoeLib.Extensions;
-
-using global::MoeLib.ComponentBases;
+﻿using MoeLib.ComponentBases;
 using System;
 using Terraria;
+
+namespace MoeLib.Extensions;
 
 public static class ProjectileExtensions
 {

@@ -1,8 +1,8 @@
-﻿namespace MoeLib.Helpers;
-
-using System;
+﻿using System;
 using Terraria.Localization;
 using Terraria.ModLoader;
+
+namespace MoeLib.Helpers;
 
 public class CrossModHelpers
 {

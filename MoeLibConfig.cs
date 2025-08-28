@@ -1,7 +1,7 @@
-﻿namespace MoeLib;
-
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using Terraria.ModLoader.Config;
+
+namespace MoeLib;
 
 internal class MoeLibConfig : ModConfig
 {

@@ -1,10 +1,10 @@
-﻿namespace MoeLib.Helpers;
-
-using global::MoeLib.ComponentBases;
+﻿using MoeLib.ComponentBases;
 using System;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
+
+namespace MoeLib.Helpers;
 
 public class TileHelpers
 {

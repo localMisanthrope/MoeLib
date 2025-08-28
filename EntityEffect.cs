@@ -1,10 +1,10 @@
-﻿namespace MoeLib;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
+
+namespace MoeLib;
 
 /// <summary>
 /// Used to create ulterior effects on an entity where a component would be too costly or unnecessary.

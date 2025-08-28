@@ -1,12 +1,12 @@
-﻿namespace MoeLib.ComponentBases;
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+
+namespace MoeLib.ComponentBases;
 
 /// <summary>
 /// A custom component for tiles which have multiple functions.

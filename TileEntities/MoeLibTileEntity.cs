@@ -1,7 +1,7 @@
-﻿namespace MoeLib.TileEntities;
-
-using Terraria.Localization;
+﻿using Terraria.Localization;
 using Terraria.ModLoader;
+
+namespace MoeLib.TileEntities;
 
 /// <summary>
 /// A custom tile entity which automatically eliminates itself if the tile is no longer valid for a TE.

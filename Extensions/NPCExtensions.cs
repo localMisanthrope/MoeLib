@@ -1,9 +1,9 @@
-﻿namespace MoeLib.Extensions;
-
-using global::MoeLib.ComponentBases;
+﻿using MoeLib.ComponentBases;
 using System;
 using Terraria;
 using Terraria.Localization;
+
+namespace MoeLib.Extensions;
 
 public static class NPCExtensions
 {

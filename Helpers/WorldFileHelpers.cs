@@ -1,8 +1,8 @@
-﻿namespace MoeLib.Helpers;
-
-using Terraria;
+﻿using Terraria;
 using Terraria.IO;
 using Terraria.Localization;
+
+namespace MoeLib.Helpers;
 
 public class WorldFileHelpers
 {

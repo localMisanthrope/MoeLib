@@ -1,12 +1,12 @@
-﻿namespace MoeLib.Extensions;
-
-using Microsoft.Xna.Framework;
-using global::MoeLib.ComponentBases;
-using global::MoeLib.Players;
+﻿using Microsoft.Xna.Framework;
+using MoeLib.ComponentBases;
+using MoeLib.Players;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Localization;
+
+namespace MoeLib.Extensions;
 
 public static class PlayerExtensions
 {

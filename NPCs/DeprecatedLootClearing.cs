@@ -1,9 +1,9 @@
-﻿namespace MoeLib.NPCs;
-
-using global::MoeLib.Systems;
+﻿using MoeLib.Systems;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader;
+
+namespace MoeLib.NPCs;
 
 internal class DeprecatedLootClearing : GlobalNPC
 {

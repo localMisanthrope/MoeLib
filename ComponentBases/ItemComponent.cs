@@ -1,7 +1,7 @@
-﻿namespace MoeLib.ComponentBases;
-
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
+
+namespace MoeLib.ComponentBases;
 
 /// <summary>
 /// A component for Item entities which stores its own data and runs logic when enabled.

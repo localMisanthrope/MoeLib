@@ -1,12 +1,12 @@
-﻿namespace MoeLib.Helpers;
-
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
+
+namespace MoeLib.Helpers;
 
 public class JSONHelpers
 {

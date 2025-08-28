@@ -1,8 +1,8 @@
-﻿namespace MoeLib.Helpers;
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ObjectData;
+
+namespace MoeLib.Helpers;
 
 internal class WorldGenHelpers
 {

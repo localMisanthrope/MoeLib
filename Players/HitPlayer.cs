@@ -1,7 +1,7 @@
-﻿namespace MoeLib.Players;
-
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
+
+namespace MoeLib.Players;
 
 public class HitPlayer : ModPlayer
 {

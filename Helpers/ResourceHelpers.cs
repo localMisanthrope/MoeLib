@@ -1,7 +1,7 @@
-﻿namespace MoeLib.Helpers;
-
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
+
+namespace MoeLib.Helpers;
 
 public class ResourceHelpers
 {
