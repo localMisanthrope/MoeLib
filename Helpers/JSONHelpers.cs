@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace MoeLib.Helpers;
 
-public class JSONHelpers
+public static class JSONHelpers
 {
     /// <summary>
     /// Gets an <see cref="IEnumerable{T}"/> of JSON data elements, if the file exists.
