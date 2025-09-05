@@ -29,21 +29,69 @@ internal sealed class DeprecatedComponent : ItemComponent
         entity.pick = 0;
     }
 
-    public override bool CanUseItem(Item item, Player player) => !Enabled;
+    public override bool CanUseItem(Item item, Player player)
+    {
+        if (!Enabled)
+            return base.CanUseItem(item, player);
 
-    public override bool CanPickup(Item item, Player player) => !Enabled;
+        return !Enabled;
+    }
 
-    public override bool CanEquipAccessory(Item item, Player player, int slot, bool modded) => !Enabled;
+    public override bool CanPickup(Item item, Player player)
+    {
+        if (!Enabled)
+            return base.CanPickup(item, player);
 
-    public override bool CanRightClick(Item item) => !Enabled;
+        return !Enabled;
+    }
 
-    public override bool CanReforge(Item item) => !Enabled;
+    public override bool CanEquipAccessory(Item item, Player player, int slot, bool modded)
+    {
+        if (!Enabled)
+            return base.CanEquipAccessory(item, player, slot, modded);
 
-    public override bool CanResearch(Item item) => !Enabled;
+        return !Enabled;
+    }
 
-    public override bool CanShoot(Item item, Player player) => !Enabled;
+    public override bool CanRightClick(Item item)
+    {
+        if (!Enabled)
+            return base.CanRightClick(item);
 
-    public override bool CanConsumeAmmo(Item weapon, Item ammo, Player player) => !Enabled;
+        return !Enabled;
+    }
+
+    public override bool CanReforge(Item item)
+    {
+        if (!Enabled)
+            return base.CanReforge(item);
+
+        return !Enabled;
+    }
+
+    public override bool CanResearch(Item item)
+    {
+        if (!Enabled)
+            return base.CanResearch(item);
+
+        return !Enabled;
+    }
+
+    public override bool CanShoot(Item item, Player player)
+    {
+        if (!Enabled)
+            return base.CanShoot(item, player);
+
+        return !Enabled;
+    }
+
+    public override bool CanConsumeAmmo(Item weapon, Item ammo, Player player)
+    {
+        if (!Enabled)
+            return base.CanConsumeAmmo(weapon, ammo, player);
+
+        return !Enabled;
+    }
 
     public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
     {

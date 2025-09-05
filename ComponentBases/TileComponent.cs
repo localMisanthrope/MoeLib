@@ -76,7 +76,9 @@ public sealed class TileComponentRegistry : ILoadable
 /// </summary>
 public sealed class TileComponentContainerTE : ModTileEntity
 {
-    public List<TileComponent> components = [];
+    public List<TileComponent> components;
+
+    public override void Load() => components = [];
 
     public override bool IsTileValidForEntity(int x, int y)
     {
@@ -144,5 +146,11 @@ public sealed class TileComponentContainerTE : ModTileEntity
         }
 
         base.LoadData(tag);
+    }
+
+    public override void Unload()
+    {
+        components.Clear();
+        components = null;
     }
 }

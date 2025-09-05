@@ -49,4 +49,13 @@ public class HitPlayer : ModPlayer
         _hitByProjectile = false;
         _timeSinceLastHit++;
     }
+
+    public override void Load()
+    {
+        _hitByNPC = false;
+        _hitByProjectile = false;
+        _timeSinceLastHit = 0;
+
+        base.Load();
+    }
 }
