@@ -19,7 +19,7 @@ public class WorldFileHelpers
 
         if (!data.IsValid)
         {
-            MoeLib.Instance.Logger.Warn(MoeLib.GetWarn("WorldFileInvalid").Format(data.Name));
+            MoeLib.Instance?.Logger.Warn(MoeLib.GetWarn("WorldFileInvalid").Format(data.Name));
             return false;
         }
 
@@ -31,7 +31,7 @@ public class WorldFileHelpers
         WorldGen.playWorld();
         Main.MenuUI.SetState(null);
 
-        MoeLib.Instance.Logger.Info(Language.GetText("Mods.MoeLib.Misc.ToWorldMessage").Format(Main.LocalPlayer.name, data.Name));
+        MoeLib.Instance?.Logger.Info(Language.GetText("Mods.MoeLib.Misc.ToWorldMessage").Format(Main.LocalPlayer.name, data.Name));
 
         return true;
     }

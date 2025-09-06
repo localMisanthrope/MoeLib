@@ -7,8 +7,7 @@ using Terraria.ModLoader;
 namespace MoeLib;
 
 /// <summary>
-/// Used to create ulterior effects on an entity where a component would be too costly or unnecessary.
-/// <br></br> In JSON, reference and get via the <see cref="ModType.Name"/> of the effect.
+/// Used to create ulterior effects on an entity where a component would not suffice.
 /// <br></br> Do not use for any I/O actions, as this should be handled in the entity or its component.
 /// </summary>
 public abstract class EntityEffect : ModType, ILocalizedModType
@@ -48,11 +47,11 @@ internal class EffectRegistry : ILoadable
         return count;
     }
 
-    public static EntityEffect GetEffect(int type) => type <= 0 || type > _registry.Count ? null : _registry[type];
+    public static EntityEffect? GetEffect(int type) => type <= 0 || type > _registry.Count ? null : _registry[type];
 
-    public static EntityEffect GetEffect<T>() where T : EntityEffect => _registry.FirstOrDefault(x => x.GetType() == typeof(T));
+    public static EntityEffect? GetEffect<T>() where T : EntityEffect => _registry.FirstOrDefault(x => x.GetType() == typeof(T));
 
-    public static EntityEffect GetEffect(string name) => _registry.FirstOrDefault(x => x.Name == name);
+    public static EntityEffect? GetEffect(string name) => _registry.FirstOrDefault(x => x.Name == name);
 
     public static int GetEffectType<T>() where T : EntityEffect
     {
@@ -60,7 +59,7 @@ internal class EffectRegistry : ILoadable
 
         if (effect is null)
         {
-            MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.EntityEffectNotFound").Format(typeof(T).Name));
+            MoeLib.Instance?.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.EntityEffectNotFound").Format(typeof(T).Name));
             return -1;
         }
 

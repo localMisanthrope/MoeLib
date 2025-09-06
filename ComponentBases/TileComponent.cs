@@ -13,20 +13,43 @@ namespace MoeLib.ComponentBases;
 /// </summary>
 public abstract class TileComponent : ModType, ILocalizedModType
 {
+    /// <summary>
+    /// This component's internal ID (or type).
+    /// </summary>
     public int ID { get; private set; }
 
+    /// <summary>
+    /// The parent tile of this component.
+    /// </summary>
     public Tile Owner => Main.tile[Position];
 
+    /// <summary>
+    /// The top-right position of this component in the world.
+    /// </summary>
     public Point Position;
 
-    public string LocalizationCategory => "TileComponents";
+    public virtual string LocalizationCategory => "TileComponents";
 
+    /// <summary>
+    /// A function for one-time initialization actions. Useful for components with data structures.
+    /// </summary>
     public virtual void Init() { }
 
+    /// <summary>
+    /// Allows you to perform logic while this component is on the tile.
+    /// </summary>
     public virtual void Update() { }
 
+    /// <summary>
+    /// Allows you to load data from this tile for this component.
+    /// </summary>
+    /// <param name="tag"></param>
     public virtual void LoadData(TagCompound tag) { }
 
+    /// <summary>
+    /// Allows you to save data to the tile for this component.
+    /// </summary>
+    /// <param name="tag"></param>
     public virtual void SaveData(TagCompound tag) { }
 
     protected sealed override void Register()
@@ -49,9 +72,9 @@ public sealed class TileComponentRegistry : ILoadable
         return count;
     }
 
-    public static TileComponent GetTileComponent(int ID) => ID < 0 || ID > _registry.Count ? null : _registry[ID];
+    public static TileComponent? GetTileComponent(int ID) => ID < 0 || ID > _registry.Count ? null : _registry[ID];
 
-    public static TileComponent GetTileComponent(string name) => _registry.FirstOrDefault(x => x.Name == name);
+    public static TileComponent? GetTileComponent(string name) => _registry.FirstOrDefault(x => x.Name == name);
 
     public static int GetType<T>() where T : TileComponent
     {
@@ -59,7 +82,7 @@ public sealed class TileComponentRegistry : ILoadable
 
         if (component is null)
         {
-            MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
+            MoeLib.Instance?.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
             return -1;
         }
 
@@ -76,7 +99,7 @@ public sealed class TileComponentRegistry : ILoadable
 /// </summary>
 public sealed class TileComponentContainerTE : ModTileEntity
 {
-    public List<TileComponent> components;
+    public List<TileComponent>? components;
 
     public override void Load() => components = [];
 
@@ -98,13 +121,22 @@ public sealed class TileComponentContainerTE : ModTileEntity
             component.Update();
     }
 
-    public override void OnKill() => components.Clear();
+    public override void OnKill()
+    {
+        components?.Clear();
+        components = null;
+    }
 
     public override void SaveData(TagCompound tag)
     {
         var list = new List<TagCompound>();
-
         var saveData = new TagCompound();
+
+        if (components is null)
+        {
+            base.SaveData(tag);
+            return;
+        }
 
         foreach (var component in components)
         {
@@ -136,13 +168,13 @@ public sealed class TileComponentContainerTE : ModTileEntity
     {
         foreach (var component in tag.GetList<TagCompound>("componentData"))
         {
-            TileComponent instance = TileComponentRegistry.GetTileComponent(component.GetInt("ID"));
+            TileComponent instance = TileComponentRegistry.GetTileComponent(component.GetInt("ID"))!;
             instance.Position = new Point(component.GetInt("X"), component.GetInt("Y"));
 
             if (component.ContainsKey("saveData"))
                 instance.LoadData(component.Get<TagCompound>("saveData"));
 
-            components.Add(instance);
+            components?.Add(instance);
         }
 
         base.LoadData(tag);
@@ -150,7 +182,7 @@ public sealed class TileComponentContainerTE : ModTileEntity
 
     public override void Unload()
     {
-        components.Clear();
+        components?.Clear();
         components = null;
     }
 }

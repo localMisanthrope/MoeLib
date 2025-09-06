@@ -1,11 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<!-- Import tModLoader mod properties -->
 	<Import Project="..\tModLoader.targets" />
 
 	<!-- General -->
 	<PropertyGroup>
-		
+	  <NoWarn>CS1591</NoWarn>
+	  <Nullable>enable</Nullable>
+	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>
 
 	<!-- References -->

@@ -14,11 +14,11 @@ public static class NPCExtensions
     /// <param name="npc"></param>
     /// <param name="init"></param>
     /// <returns>True if the component exists, false otherwise.</returns>
-    public static bool TryEnableComponent<T>(this NPC npc, Action<T> init = null) where T : NPCComponent
+    public static bool TryEnableComponent<T>(this NPC npc, Action<T>? init = null) where T : NPCComponent
     {
         if (!npc.TryGetGlobalNPC(out T result))
         {
-            MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
+            MoeLib.Instance?.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
             return false;
         }
 
@@ -35,7 +35,7 @@ public static class NPCExtensions
     /// <param name="npc"></param>
     /// <param name="component"></param>
     /// <returns>True if the instance exists and is enabled, false otherwise.</returns>
-    public static bool TryGetComponent<T>(this NPC npc, out T component) where T : NPCComponent
+    public static bool TryGetComponent<T>(this NPC npc, out T? component) where T : NPCComponent
     {
         if (npc.TryGetGlobalNPC(out T result))
         {
@@ -43,7 +43,7 @@ public static class NPCExtensions
             return result.Enabled;
         }
 
-        MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
+        MoeLib.Instance?.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
         component = default;
         return false;
     }
@@ -66,7 +66,7 @@ public static class NPCExtensions
     {
         if (!npc.TryGetGlobalNPC(out T result))
         {
-            MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
+            MoeLib.Instance?.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
             return false;
         }
 

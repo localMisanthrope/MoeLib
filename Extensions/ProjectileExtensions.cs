@@ -13,11 +13,11 @@ public static class ProjectileExtensions
     /// <param name="projectile"></param>
     /// <param name="init"></param>
     /// <returns>True if the component exists, false otherwise.</returns>
-    public static bool TryEnableComponent<T>(this Projectile projectile, Action<T> init = null) where T : ProjectileComponent
+    public static bool TryEnableComponent<T>(this Projectile projectile, Action<T>? init = null) where T : ProjectileComponent
     {
         if (!projectile.TryGetGlobalProjectile(out T result))
         {
-            MoeLib.Instance.Logger.Warn(MoeLib.GetWarn("ComponentNotFound").Format(typeof(T).Name));
+            MoeLib.Instance?.Logger.Warn(MoeLib.GetWarn("ComponentNotFound").Format(typeof(T).Name));
             return false;
         }
 
@@ -34,7 +34,7 @@ public static class ProjectileExtensions
     /// <param name="projectile"></param>
     /// <param name="component"></param>
     /// <returns>True if the instance exists and is enabled, false otherwise.</returns>
-    public static bool TryGetComponent<T>(this Projectile projectile, out T component) where T : ProjectileComponent
+    public static bool TryGetComponent<T>(this Projectile projectile, out T? component) where T : ProjectileComponent
     {
         if (projectile.TryGetGlobalProjectile(out T result))
         {
@@ -42,7 +42,7 @@ public static class ProjectileExtensions
             return result.Enabled;
         }
 
-        MoeLib.Instance.Logger.Warn(MoeLib.GetWarn("ComponentNotFound").Format(typeof(T).Name));
+        MoeLib.Instance?.Logger.Warn(MoeLib.GetWarn("ComponentNotFound").Format(typeof(T).Name));
         component = default;
         return false;
     }
@@ -65,7 +65,7 @@ public static class ProjectileExtensions
     {
         if (!projectile.TryGetGlobalProjectile(out T result))
         {
-            MoeLib.Instance.Logger.Warn(MoeLib.GetWarn("ComponentNotFound").Format(typeof(T).Name));
+            MoeLib.Instance?.Logger.Warn(MoeLib.GetWarn("ComponentNotFound").Format(typeof(T).Name));
             return false;
         }
 

@@ -12,7 +12,7 @@ public abstract class PlayerComponent : ModPlayer, ILocalizedModType
     /// </summary>
     public bool Enabled { get; set; }
 
-    public string LocalizationCategory => "PlayerComponents";
+    public virtual string LocalizationCategory => "PlayerComponents";
 
     /// <summary>
     /// Allows you to make one-time actions for when this component is enabled.

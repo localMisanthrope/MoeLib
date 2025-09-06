@@ -15,7 +15,7 @@ public abstract class NPCComponent : GlobalNPC, ILocalizedModType
 
     public sealed override bool InstancePerEntity { get; } = true;
 
-    public string LocalizationCategory => "NPCComponents";
+    public virtual string LocalizationCategory => "NPCComponents";
 
     /// <summary>
     /// Allows you to make one-time actions for when this component is enabled.

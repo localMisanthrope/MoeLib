@@ -10,7 +10,7 @@ namespace MoeLib.Systems;
 
 internal sealed class DeprecationSystem : ModSystem
 {
-    public static HashSet<int> toBeDeprecated = [];
+    public static readonly HashSet<int> toBeDeprecated = [];
 
     public override void PostAddRecipes()
     {

@@ -15,7 +15,7 @@ public abstract class ProjectileComponent : GlobalProjectile, ILocalizedModType
 
     public sealed override bool InstancePerEntity { get; } = true;
 
-    public string LocalizationCategory => "ProjectileComponents";
+    public virtual string LocalizationCategory => "ProjectileComponents";
 
     /// <summary>
     /// Allows you to make one-time actions for when this component is enabled.

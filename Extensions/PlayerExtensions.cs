@@ -29,14 +29,14 @@ public static class PlayerExtensions
     /// </summary>
     /// <param name="player"></param>
     /// <returns></returns>
-    public static bool JustHit(this Player player) => player.GetHitManager().JustHit;
+    public static bool? JustHit(this Player player) => player.GetHitManager()?.JustHit;
 
     /// <summary>
     /// A shorthand to get the player's respective hit manager for hit data.
     /// </summary>
     /// <param name="player"></param>
     /// <returns></returns>
-    public static HitPlayer GetHitManager(this Player player) => player.TryGetModPlayer(out HitPlayer manager) ? manager : null;
+    public static HitPlayer? GetHitManager(this Player player) => player.TryGetModPlayer(out HitPlayer manager) ? manager : null;
 
     /// <summary>
     /// Gets the next open slot within the player's inventory.
@@ -149,9 +149,9 @@ public static class PlayerExtensions
     /// </summary>
     /// <param name="player"></param>
     /// <returns></returns>
-    public static Player GetClosestPlayer(this Player player)
+    public static Player? GetClosestPlayer(this Player player)
     {
-        Player closest = null;
+        Player? closest = null;
         float closestDist = float.PositiveInfinity;
 
         foreach (var other in Main.ActivePlayers)
@@ -176,9 +176,9 @@ public static class PlayerExtensions
     /// <param name="player"></param>
     /// <param name="excludeFriendlies">Whether or not to exclude friendly (Town NPCs, Critters, etc.) from the search. True by default.</param>
     /// <returns></returns>
-    public static NPC GetClosestNPC(this Player player, bool excludeFriendlies = true)
+    public static NPC? GetClosestNPC(this Player player, bool excludeFriendlies = true)
     {
-        NPC closest = null;
+        NPC? closest = null;
         float closestDist = float.PositiveInfinity;
 
         foreach (var npc in Main.ActiveNPCs)
@@ -204,11 +204,11 @@ public static class PlayerExtensions
     /// <param name="player"></param>
     /// <param name="init"></param>
     /// <returns>True if the component exists, false otherwise.</returns>
-    public static bool TryEnableComponent<T>(this Player player, Action<T> init = null) where T : PlayerComponent
+    public static bool TryEnableComponent<T>(this Player player, Action<T>? init = null) where T : PlayerComponent
     {
         if (!player.TryGetModPlayer(out T result))
         {
-            MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
+            MoeLib.Instance?.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
             return false;
         }
 
@@ -225,7 +225,7 @@ public static class PlayerExtensions
     /// <param name="player"></param>
     /// <param name="component"></param>
     /// <returns>True if the instance exists and is enabled, false otherwise.</returns>
-    public static bool TryGetComponent<T>(this Player player, out T component) where T : PlayerComponent
+    public static bool TryGetComponent<T>(this Player player, out T? component) where T : PlayerComponent
     {
         if (player.TryGetModPlayer(out T result))
         {
@@ -233,7 +233,7 @@ public static class PlayerExtensions
             return result.Enabled;
         }
 
-        MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
+        MoeLib.Instance?.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
         component = default;
         return false;
     }
@@ -256,7 +256,7 @@ public static class PlayerExtensions
     {
         if (!player.TryGetModPlayer(out T result))
         {
-            MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
+            MoeLib.Instance?.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
             return false;
         }
 

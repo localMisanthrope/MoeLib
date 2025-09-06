@@ -8,13 +8,27 @@ using Terraria.ModLoader.Core;
 
 namespace MoeLib;
 
+/// <summary>
+/// A simple attribute to attach to any object loaded by JSON via a data struct.
+/// <br></br> MoeLib requires your class have a public static readonly string entitled "JSONPath" and a primary constructor with your data struct as the parameter.
+/// <br></br> If you'd like to use custom instantiation, create a custom <see cref="ILoadable"/> in your object's class and add the content that way.
+/// <br></br> For more information on how JSON instantiation works, please refer to the documentation.
+/// </summary>
 [AttributeUsage(AttributeTargets.Class)]
 public sealed class JSONAutoloadAttribute : Attribute { }
 
 public class MoeLib : Mod
 {
-    public static MoeLib Instance { get; set; }
+    /// <summary>
+    /// Convenience static accessor.
+    /// </summary>
+    public static MoeLib? Instance { get; set; }
 
+    /// <summary>
+    /// Grabs a particular warn message from the localization files.
+    /// </summary>
+    /// <param name="warnKey"></param>
+    /// <returns></returns>
     public static LocalizedText GetWarn(string warnKey) => Language.GetText($"Mods.MoeLib.Warns.{warnKey}");
 
     private delegate void orig_Load(Mod self); //Load detour credit to @davidfdev. Thank you!
@@ -25,33 +39,53 @@ public class MoeLib : Mod
         Instance = this;
     }
 
-    private static void On_Load(orig_Load orig, Mod self)
+    private void On_Load(orig_Load orig, Mod self)
     {
         orig.Invoke(self);
 
         var moeLib = ModLoader.Mods.First(x => x.Name == "MoeLib").Code;
         var meth = AssemblyManager.GetLoadableTypes(moeLib)
-            .FirstOrDefault(x => x.IsClass && x.FullName == "MoeLib.Helpers.JSONHelpers")
+            .FirstOrDefault(x => x.IsClass && x.FullName == "MoeLib.Helpers.JSONHelpers")?
             .GetMethod("GetJSONData", BindingFlags.Public | BindingFlags.Static);
 
         foreach (var type in AssemblyManager.GetLoadableTypes(self.Code).Where(x => x.IsClass && x.IsSealed && x.CustomAttributes.Any(x => x.AttributeType.FullName == "MoeLib.JSONAutoloadAttribute")))
         {
-            self.Logger.Debug($"Begin instantiating type {type.Name} (type of {type.BaseType.Name}).");
+            self.Logger.Debug($"Begin instantiating type {type.Name} (type of {type.BaseType?.Name}).");
 
             var watch = Stopwatch.StartNew();
-
             var data = type.GetConstructors()[0].GetParameters()[0].ParameterType;
-            string path = (string)type.GetField("JSONPath", BindingFlags.Public | BindingFlags.Static).GetValue(null);
-            var list = meth.MakeGenericMethod(data).Invoke(null, [self, path]); //Generate and invoke previous function.
-            int count = (int)(typeof(Enumerable).GetMember("Count")[0] as MethodInfo).MakeGenericMethod(data).Invoke(null, [list]);
+            string path = (string)type.GetField("JSONPath", BindingFlags.Public | BindingFlags.Static)?.GetValue(null)!;
+            if (path is null)
+            {
+                self.Logger.Warn($"Skipping Type {type.Name}; JSONPath field could not be found! Ensure it is public static readonly!");
+                watch.Stop();
+                continue;
+            }
+
+            var list = meth?.MakeGenericMethod(data).Invoke(null, [self, path]); //Generate and invoke previous function.
+            if (list is null)
+            {
+                self.Logger.Warn($"Skipping Type {type.Name}; JSON file at {path} not found or returned null!");
+                watch.Stop();
+                continue;
+            }
+
+            int count = (int)(typeof(Enumerable).GetMember("Count")[0] as MethodInfo)?.MakeGenericMethod(data).Invoke(null, [list])!;
+            if (count <= 0)
+            {
+                self.Logger.Debug($"Skipping Type {type.Name}; No {type.Name} data found.");
+                watch.Stop();
+                continue;
+            }
 
             for (int i = 0; i < count; i++)
             {
-                var element = (typeof(Enumerable).GetMember("ElementAt")[0] as MethodInfo).MakeGenericMethod(data).Invoke(null, [list, i]); //Get the element at the current index.
-                var instance = type.GetConstructor([data]).Invoke([element]) as ModType; //Create the instance.
+                var element = (typeof(Enumerable).GetMember("ElementAt")[0] as MethodInfo)?.MakeGenericMethod(data).Invoke(null, [list, i]); //Get the element at the current index.
+                var instance = type.GetConstructor([data])?.Invoke([element]) as ModType; //Create the instance.
                 self.AddContent(instance); //Add the instance.
 
                 instance = null;
+                element = null;
             }
 
             list = null;
@@ -63,8 +97,5 @@ public class MoeLib : Mod
         meth = null;
     }
 
-    public override void Unload()
-    {
-        Instance ??= null;
-    }
+    public override void Unload() => Instance ??= null;
 }

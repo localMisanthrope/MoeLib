@@ -29,7 +29,7 @@ public static class ItemExtensions
         DeprecationSystem.toBeDeprecated.Add(item.type);
 
         if (ModContent.GetInstance<MoeLibConfig>().EnableDevMode)
-            MoeLib.Instance.Logger.Info(Language.GetText("Mods.MoeLib.Misc.ItemDeprecated").Format(item.Name));
+            MoeLib.Instance?.Logger.Info(Language.GetText("Mods.MoeLib.Misc.ItemDeprecated").Format(item.Name));
     }
 
     /// <summary>
@@ -46,11 +46,11 @@ public static class ItemExtensions
     /// <param name="item"></param>
     /// <param name="init"></param>
     /// <returns>True if the component exists, false otherwise.</returns>
-    public static bool TryEnableComponent<T>(this Item item, Action<T> init = null) where T : ItemComponent
+    public static bool TryEnableComponent<T>(this Item item, Action<T>? init = null) where T : ItemComponent
     {
         if (!item.TryGetGlobalItem(out T result))
         {
-            MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
+            MoeLib.Instance?.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
             return false;
         }
 
@@ -83,7 +83,7 @@ public static class ItemExtensions
             }
         }
 
-        MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(componentName));
+        MoeLib.Instance?.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(componentName));
         return false;
     }
 
@@ -94,7 +94,7 @@ public static class ItemExtensions
     /// <param name="item"></param>
     /// <param name="component"></param>
     /// <returns>True if the instance exists and is enabled, false otherwise.</returns>
-    public static bool TryGetComponent<T>(this Item item, out T component) where T : ItemComponent
+    public static bool TryGetComponent<T>(this Item item, out T? component) where T : ItemComponent
     {
         if (item.TryGetGlobalItem(out T result))
         {
@@ -102,7 +102,7 @@ public static class ItemExtensions
             return result.Enabled;
         }
 
-        MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
+        MoeLib.Instance?.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
         component = default;
         return true;
     }
@@ -125,7 +125,7 @@ public static class ItemExtensions
     {
         if (!item.TryGetGlobalItem(out T result))
         {
-            MoeLib.Instance.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
+            MoeLib.Instance?.Logger.Warn(Language.GetText("Mods.MoeLib.Warns.ComponentNotFound").Format(typeof(T).Name));
             return false;
         }
 

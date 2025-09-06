@@ -15,7 +15,7 @@ public abstract class ItemComponent : GlobalItem, ILocalizedModType
 
     public sealed override bool InstancePerEntity { get; } = true;
 
-    public string LocalizationCategory => "ItemComponents";
+    public virtual string LocalizationCategory => "ItemComponents";
 
     /// <summary>
     /// Allows you to make one-time actions for when this component is enabled.
