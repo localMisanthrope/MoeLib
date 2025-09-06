@@ -46,7 +46,7 @@ public class MoeLib : Mod
         var moeLib = ModLoader.Mods.First(x => x.Name == "MoeLib").Code;
         var meth = AssemblyManager.GetLoadableTypes(moeLib)
             .FirstOrDefault(x => x.IsClass && x.FullName == "MoeLib.Helpers.JSONHelpers")?
-            .GetMethod("GetJSONData", BindingFlags.Public | BindingFlags.Static);
+            .GetMethod("GetJSONData", BindingFlags.Public | BindingFlags.Static, [typeof(Mod), typeof(string)]);
 
         foreach (var type in AssemblyManager.GetLoadableTypes(self.Code).Where(x => x.IsClass && x.IsSealed && x.CustomAttributes.Any(x => x.AttributeType.FullName == "MoeLib.JSONAutoloadAttribute")))
         {
