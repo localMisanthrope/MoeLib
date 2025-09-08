@@ -1,7 +1,9 @@
-ComponentDuplicate: Failed to add "{0}"; component already exists on this entity!
-ComponentNotFound: Could not find "{0}"; component missing or does not exist!
-EntityEffectNotFound: Could not find "{0}"; effect missing or does not exist!
-JSONEmpty: Failed to load "{0}"; file is empty!
-JSONNotFound: Could not find "{0}.json"; file missing, or does not exist!
-TileEntityNotFound: Could not find "{0}"; TileEntity missing or does not exist!
-WorldInvalid: World "{0}" is invalid and failed to load!
+ComponentDuplicate: W002 - Failed to add "{0}"; component already exists on this entity!
+ComponentNotFound: W001 - Could not find "{0}"; component missing or does not exist!
+EntityEffectNotFound: W005 - Could not find "{0}"; effect missing or does not exist!
+JSONEmpty: W003 - Failed to load "{0}"; file is empty!
+JSONNotFound: W004 - Could not find "{0}.json"; file missing, or does not exist!
+JSONNotFoundAuto: W008 - Skipping type "{0}"; JSON data at "{1}" could not be found or does not exist!
+JSONPathNotFound: W007 - Skipping Type "{0}"; JSONPath field could not be found! Ensure it is public static readonly!
+TileEntityNotFound: W006 - Could not find "{0}"; TileEntity missing or does not exist!
+WorldInvalid: W010 - World "{0}" is invalid and failed to load!

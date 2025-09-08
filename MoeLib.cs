@@ -50,14 +50,14 @@ public class MoeLib : Mod
 
         foreach (var type in AssemblyManager.GetLoadableTypes(self.Code).Where(x => x.IsClass && x.IsSealed && x.CustomAttributes.Any(x => x.AttributeType.FullName == "MoeLib.JSONAutoloadAttribute")))
         {
-            self.Logger.Debug($"Begin instantiating type {type.Name} (type of {type.BaseType?.Name}).");
+            self.Logger.Debug(Language.GetText("Mods.MoeLib.Misc.BeginTypeInstantiation").Format(type.Name, type.BaseType?.Name));
 
             var watch = Stopwatch.StartNew();
             var data = type.GetConstructors()[0].GetParameters()[0].ParameterType;
             string path = (string)type.GetField("JSONPath", BindingFlags.Public | BindingFlags.Static)?.GetValue(null)!;
             if (path is null)
             {
-                self.Logger.Warn($"Skipping Type {type.Name}; JSONPath field could not be found! Ensure it is public static readonly!");
+                self.Logger.Warn(GetWarn("JSONPathNotFound").Format(type.Name));
                 watch.Stop();
                 continue;
             }
@@ -65,7 +65,7 @@ public class MoeLib : Mod
             var list = meth?.MakeGenericMethod(data).Invoke(null, [self, path]); //Generate and invoke previous function.
             if (list is null)
             {
-                self.Logger.Warn($"Skipping Type {type.Name}; JSON file at {path} not found or returned null!");
+                self.Logger.Warn(GetWarn("JSONNotFoundAuto").Format(type.Name, path));
                 watch.Stop();
                 continue;
             }
@@ -73,7 +73,7 @@ public class MoeLib : Mod
             int count = (int)(typeof(Enumerable).GetMember("Count")[0] as MethodInfo)?.MakeGenericMethod(data).Invoke(null, [list])!;
             if (count <= 0)
             {
-                self.Logger.Debug($"Skipping Type {type.Name}; No {type.Name} data found.");
+                self.Logger.Debug(Language.GetText("Mods.MoeLib.Misc.NoJSONDataPresent").Format(type.Name, path));
                 watch.Stop();
                 continue;
             }
@@ -90,7 +90,7 @@ public class MoeLib : Mod
 
             list = null;
             watch.Stop();
-            self.Logger.Debug($"Finished instantiating type {type.Name} ({count}); Took {watch.Elapsed.TotalMilliseconds} ms.");
+            self.Logger.Debug(Language.GetText("Mods.MoeLib.Misc.EndTypeInstantiation").Format(type.Name, count, watch.Elapsed.TotalMilliseconds));
         }
 
         moeLib = null;

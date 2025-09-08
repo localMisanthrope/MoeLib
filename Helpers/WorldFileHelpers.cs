@@ -7,7 +7,7 @@ namespace MoeLib.Helpers;
 public class WorldFileHelpers
 {
     /// <summary>
-    /// Allows you to manually send the player to a provided world.
+    /// Allows you to manually send the player to a provided world. For multiplayer, use <see cref="MultiplayerToWorld(string, bool)"/>.
     /// </summary>
     /// <param name="path"></param>
     /// <param name="cloud"></param>
@@ -32,6 +32,25 @@ public class WorldFileHelpers
         Main.MenuUI.SetState(null);
 
         MoeLib.Instance?.Logger.Info(Language.GetText("Mods.MoeLib.Misc.ToWorldMessage").Format(Main.LocalPlayer.name, data.Name));
+
+        return true;
+    }
+
+    /// <summary>
+    /// Allows you to manually send all players present in the game to a provided world.
+    /// <br></br><b>UNIMPLEMENTED.</b> As of 8-September-2025, this function does not have a working implementation. 
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    public static bool MultiplayerToWorld(string path, bool voteBased = false)
+    {
+        if (!Main.dedServ)
+            return false;
+
+        if (voteBased)
+        {
+
+        }
 
         return true;
     }
