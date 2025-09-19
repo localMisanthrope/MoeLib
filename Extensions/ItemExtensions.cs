@@ -67,7 +67,7 @@ public static class ItemExtensions
     /// <param name="item"></param>
     /// <param name="componentName"></param>
     /// <returns>True if the component exists, false otherwise.</returns>
-    public static bool TryEnableComponent(this Item item, string componentName)
+    public static bool TryEnableComponentByName(this Item item, string componentName)
     {
         foreach (var global in item.Globals)
         {

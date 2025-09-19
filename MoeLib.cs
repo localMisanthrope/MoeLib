@@ -48,7 +48,9 @@ public class MoeLib : Mod
             .FirstOrDefault(x => x.IsClass && x.FullName == "MoeLib.Helpers.JSONHelpers")?
             .GetMethod("GetJSONData", BindingFlags.Public | BindingFlags.Static, [typeof(Mod), typeof(string)]);
 
-        foreach (var type in AssemblyManager.GetLoadableTypes(self.Code).Where(x => x.IsClass && x.IsSealed && x.CustomAttributes.Any(x => x.AttributeType.FullName == "MoeLib.JSONAutoloadAttribute")))
+        Type[] loadables = AssemblyManager.GetLoadableTypes(self.Code);
+
+        foreach (var type in loadables.Where(x => x.IsClass && x.CustomAttributes.Any(x => x.AttributeType.FullName == "MoeLib.JSONAutoloadAttribute")))
         {
             self.Logger.Debug(Language.GetText("Mods.MoeLib.Misc.BeginTypeInstantiation").Format(type.Name, type.BaseType?.Name));
 
@@ -62,7 +64,7 @@ public class MoeLib : Mod
                 continue;
             }
 
-            var list = meth?.MakeGenericMethod(data).Invoke(null, [self, path]); //Generate and invoke previous function.
+            var list = meth?.MakeGenericMethod(data).Invoke(null, [self, path]);
             if (list is null)
             {
                 self.Logger.Warn(GetWarn("JSONNotFoundAuto").Format(type.Name, path));
@@ -80,10 +82,14 @@ public class MoeLib : Mod
 
             for (int i = 0; i < count; i++)
             {
-                var element = (typeof(Enumerable).GetMember("ElementAt")[0] as MethodInfo)?.MakeGenericMethod(data).Invoke(null, [list, i]); //Get the element at the current index.
-                var instance = type.GetConstructor([data])?.Invoke([element]) as ModType; //Create the instance.
-                self.AddContent(instance); //Add the instance.
+                var element = (typeof(Enumerable).GetMember("ElementAt")[0] as MethodInfo)?.MakeGenericMethod(data).Invoke(null, [list, i]);
+                var instance = type.GetConstructor([data])?.Invoke([element]) as ModType;
 
+                var entityData = data.GetProperty("EntityData", BindingFlags.Public | BindingFlags.Instance)?.GetValue(data)!;
+                if (entityData is not null)
+                    instance = TagRegistry.EnableTags(self, (EntityData)entityData, instance!);
+
+                self.AddContent(instance);
                 instance = null;
                 element = null;
             }
@@ -97,5 +103,9 @@ public class MoeLib : Mod
         meth = null;
     }
 
-    public override void Unload() => Instance ??= null;
+    public override void Unload()
+    {
+        TagRegistry.Unload();
+        Instance ??= null;
+    }
 }
